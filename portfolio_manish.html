@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Video Editor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-dim: #8A6C2A;
+    --cream: #EDE8DC;
+    --ink: #0D0C0A;
+    --ink-2: #161412;
+    --ink-3: #211F1B;
+    --text-muted: #7A7164;
+    --text-light: #B8AFA0;
+    --red-accent: #8B2E2E;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    cursor: none;
+    overflow-x: hidden;
+  }
+
+  /* Custom cursor */
+  #cursor {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
+    mix-blend-mode: exclusion;
+  }
+  #cursor-ring {
+    position: fixed;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.12s ease, width 0.25s ease, height 0.25s ease, opacity 0.2s ease;
+    opacity: 0.5;
+  }
+  body:hover #cursor { opacity: 1; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    background: linear-gradient(to bottom, rgba(13,12,10,0.95) 0%, transparent 100%);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.25s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 4rem 4rem 5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 2.5rem;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 8vw, 7.5rem);
+    line-height: 0.92;
+    letter-spacing: 0.03em;
+    color: var(--cream);
+    margin-bottom: 0.25rem;
+  }
+
+  .hero-title span {
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    max-width: 28rem;
+    margin: 2rem 0 3rem;
+    line-height: 1.8;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--ink);
+    padding: 0.85rem 2.2rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.25s, transform 0.2s;
+  }
+  .btn-primary:hover { background: var(--cream); transform: translateY(-2px); }
+
+  .btn-ghost {
+    color: var(--text-light);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: color 0.25s;
+  }
+  .btn-ghost:hover { color: var(--gold); }
+  .btn-ghost::after {
+    content: '→';
+    transition: transform 0.2s;
+  }
+  .btn-ghost:hover::after { transform: translateX(4px); }
+
+  .hero-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-reel-frame {
+    width: 85%;
+    aspect-ratio: 16/10;
+    background: var(--ink-3);
+    border: 1px solid rgba(201,168,76,0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-reel-placeholder {
+    width: 100%;
+    height: 100%;
+    background: 
+      linear-gradient(135deg, rgba(201,168,76,0.05) 0%, transparent 60%),
+      repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(255,255,255,0.01) 60px, rgba(255,255,255,0.01) 61px),
+      repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.01) 60px, rgba(255,255,255,0.01) 61px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .play-btn {
+    width: 64px;
+    height: 64px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: none;
+    transition: background 0.25s, transform 0.2s;
+    color: var(--gold);
+  }
+  .play-btn:hover { background: rgba(201,168,76,0.15); transform: scale(1.08); }
+  .play-btn svg { margin-left: 4px; }
+
+  .reel-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .filmstrip {
+    position: absolute;
+    top: 0; right: 0;
+    width: 16px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 2px;
+  }
+  .filmstrip-hole {
+    width: 100%;
+    aspect-ratio: 1;
+    background: rgba(201,168,76,0.15);
+    border-radius: 1px;
+    flex-shrink: 0;
+  }
+
+  /* Film strip decor on hero */
+  .hero-filmstrip-decor {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 1rem 0;
+    opacity: 0.12;
+  }
+  .fhole {
+    width: 16px;
+    height: 10px;
+    border: 1px solid var(--gold);
+    border-radius: 1px;
+    margin: 0 auto;
+  }
+
+  /* stats row */
+  .stats-bar {
+    background: var(--ink-2);
+    border-top: 1px solid rgba(201,168,76,0.08);
+    border-bottom: 1px solid rgba(201,168,76,0.08);
+    display: flex;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .stat-item {
+    flex: 1;
+    max-width: 200px;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    border-right: 1px solid rgba(201,168,76,0.08);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+  }
+
+  /* SECTION COMMON */
+  .section {
+    padding: 7rem 5rem;
+  }
+  .section-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .section-tag::before {
+    content: '';
+    width: 2rem;
+    height: 1px;
+    background: var(--gold);
+    display: block;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+
+  /* WORK GRID */
+  .work-section {
+    background: var(--ink);
+  }
+
+  .work-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3.5rem;
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+  }
+
+  .project-card {
+    background: var(--ink-3);
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease;
+    border: 1px solid rgba(201,168,76,0.06);
+  }
+  .project-card:hover { transform: translateY(-4px); }
+
+  .project-card.large { grid-column: span 7; }
+  .project-card.medium { grid-column: span 5; }
+  .project-card.wide { grid-column: span 8; }
+  .project-card.small { grid-column: span 4; }
+
+  .card-thumb {
+    width: 100%;
+    aspect-ratio: 16/10;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-bg {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-bg-1 { background: linear-gradient(135deg, #1a0505 0%, #3d1010 50%, #1a0505 100%); }
+  .card-bg-2 { background: linear-gradient(135deg, #05100f 0%, #0d2e2a 50%, #05100f 100%); }
+  .card-bg-3 { background: linear-gradient(135deg, #10100a 0%, #2b280f 50%, #10100a 100%); }
+  .card-bg-4 { background: linear-gradient(135deg, #0a0514 0%, #1e1035 50%, #0a0514 100%); }
+
+  .card-scene {
+    width: 80%;
+    height: 80%;
+    position: relative;
+  }
+
+  .scene-lines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 8px,
+      rgba(255,255,255,0.02) 8px,
+      rgba(255,255,255,0.02) 9px
+    );
+  }
+
+  /* SVG scene icons */
+  .scene-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-play-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(13,12,10,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .project-card:hover .card-play-overlay { opacity: 1; }
+
+  .mini-play {
+    width: 44px;
+    height: 44px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+  }
+  .mini-play svg { margin-left: 3px; }
+
+  .card-body {
+    padding: 1.2rem 1.4rem;
+  }
+
+  .card-category {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 0.4rem;
+  }
+
+  .card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.35rem;
+    letter-spacing: 0.05em;
+    color: var(--cream);
+    line-height: 1.1;
+  }
+
+  .card-meta {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 0.75rem;
+  }
+
+  .meta-item {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .meta-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  /* SERVICES */
+  .services-section {
+    background: var(--ink-2);
+    padding: 7rem 5rem;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(201,168,76,0.08);
+    margin-top: 4rem;
+    border: 1px solid rgba(201,168,76,0.08);
+  }
+
+  .service-item {
+    background: var(--ink-2);
+    padding: 2.5rem;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-item::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.4s ease;
+  }
+  .service-item:hover { background: var(--ink-3); }
+  .service-item:hover::before { width: 100%; }
+
+  .service-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: var(--gold-dim);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.05em;
+    color: var(--cream);
+    margin-bottom: 0.75rem;
+    line-height: 1.1;
+  }
+
+  .service-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  .service-tools {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tool-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 0.25rem 0.6rem;
+  }
+
+  /* ABOUT */
+  .about-section {
+    background: var(--ink);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    padding: 7rem 5rem;
+  }
+
+  .about-visual {
+    position: relative;
+  }
+
+  .about-frame {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: var(--ink-3);
+    border: 1px solid rgba(201,168,76,0.12);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-frame-inner {
+    width: 100%;
+    height: 100%;
+    background:
+      linear-gradient(160deg, rgba(201,168,76,0.04) 0%, transparent 60%),
+      repeating-linear-gradient(45deg, transparent, transparent 30px, rgba(255,255,255,0.01) 30px, rgba(255,255,255,0.01) 31px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    color: rgba(201,168,76,0.06);
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+
+  .about-corner {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-color: var(--gold);
+    border-style: solid;
+    opacity: 0.4;
+  }
+  .about-corner.tl { top: 10px; left: 10px; border-width: 1px 0 0 1px; }
+  .about-corner.tr { top: 10px; right: 10px; border-width: 1px 1px 0 0; }
+  .about-corner.bl { bottom: 10px; left: 10px; border-width: 0 0 1px 1px; }
+  .about-corner.br { bottom: 10px; right: 10px; border-width: 0 1px 1px 0; }
+
+  .about-badge {
+    position: absolute;
+    bottom: -1.5rem;
+    right: -1.5rem;
+    width: 110px;
+    height: 110px;
+    background: var(--gold);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .badge-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .badge-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    opacity: 0.75;
+  }
+
+  .about-content .section-title { margin-bottom: 1.5rem; }
+
+  .about-text {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.9;
+    margin-bottom: 1rem;
+  }
+
+  .skills-list {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 2rem;
+  }
+
+  .skill-line {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  .skill-line::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials-section {
+    background: var(--ink-2);
+    padding: 7rem 5rem;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 4rem;
+  }
+
+  .testimonial-card {
+    background: var(--ink);
+    border: 1px solid rgba(201,168,76,0.08);
+    padding: 2rem;
+    position: relative;
+  }
+
+  .quote-mark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: rgba(201,168,76,0.15);
+    line-height: 1;
+    margin-bottom: -1rem;
+  }
+
+  .testimonial-text {
+    font-size: 0.87rem;
+    color: var(--text-light);
+    line-height: 1.8;
+    font-style: italic;
+  }
+
+  .testimonial-author {
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-top: 1px solid rgba(201,168,76,0.08);
+    padding-top: 1.25rem;
+  }
+
+  .author-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--ink-3);
+    border: 1px solid rgba(201,168,76,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--gold);
+    flex-shrink: 0;
+    letter-spacing: 0.05em;
+  }
+
+  .author-name {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--cream);
+  }
+  .author-role {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--ink);
+    padding: 7rem 5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .contact-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--cream);
+    margin: 1rem 0 1.5rem;
+  }
+
+  .contact-subtitle {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    max-width: 24rem;
+  }
+
+  .contact-links {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--text-light);
+    transition: color 0.25s;
+    font-size: 0.85rem;
+  }
+  .contact-link:hover { color: var(--gold); }
+  .contact-link-icon {
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(201,168,76,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold-dim);
+    font-size: 0.85rem;
+    transition: background 0.25s;
+  }
+  .contact-link:hover .contact-link-icon {
+    background: rgba(201,168,76,0.1);
+    color: var(--gold);
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .form-input,
+  .form-textarea {
+    background: var(--ink-3);
+    border: 1px solid rgba(201,168,76,0.1);
+    color: var(--cream);
+    padding: 0.85rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.25s;
+    width: 100%;
+  }
+  .form-input:focus,
+  .form-textarea:focus { border-color: rgba(201,168,76,0.4); }
+  .form-input::placeholder,
+  .form-textarea::placeholder { color: var(--text-muted); font-size: 0.85rem; }
+
+  .form-textarea { resize: vertical; min-height: 130px; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-submit {
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    padding: 1rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: background 0.25s, transform 0.2s;
+    align-self: flex-start;
+  }
+  .form-submit:hover { background: var(--cream); transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink-2);
+    border-top: 1px solid rgba(201,168,76,0.08);
+    padding: 2.5rem 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  .social-link {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+  .social-link:hover { color: var(--gold); }
+
+  /* ANIMATIONS */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag { animation: fadeInUp 0.6s ease both; }
+  .hero-title { animation: fadeInUp 0.7s 0.1s ease both; }
+  .hero-sub { animation: fadeInUp 0.7s 0.2s ease both; }
+  .hero-cta { animation: fadeInUp 0.7s 0.3s ease both; }
+  .hero-right { animation: fadeInUp 0.9s 0.15s ease both; }
+
+  /* timeline line decor */
+  .divider-line {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.15), transparent);
+  }
+
+  @media (max-width: 1100px) {
+    nav { padding: 1.25rem 2rem; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 8rem 2.5rem 3rem; }
+    .hero-right { padding: 2rem 2.5rem 4rem; justify-content: flex-start; }
+    .hero-reel-frame { width: 100%; }
+    .section, .services-section, .testimonials-section, .contact-section, .about-section { padding: 5rem 2.5rem; }
+    .work-grid { grid-template-columns: 1fr 1fr; }
+    .project-card.large, .project-card.medium, .project-card.wide, .project-card.small { grid-column: span 1; }
+    .services-grid, .testimonials-grid { grid-template-columns: 1fr; }
+    .contact-section, .about-section { grid-template-columns: 1fr; gap: 3rem; }
+    footer { flex-direction: column; gap: 1.25rem; text-align: center; padding: 2rem; }
+    body { cursor: auto; }
+    #cursor, #cursor-ring { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .hero-title { font-size: 3.2rem; }
+    .stats-bar { flex-wrap: wrap; }
+    .stat-item { min-width: 50%; }
+    .form-row { grid-template-columns: 1fr; }
+    .skills-list { grid-template-columns: 1fr; }
+    .work-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Alex&nbsp;Mercer</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Video Editor</div>
+    <h1 class="hero-title">
+      Craft the<br>
+      <span>Perfect</span>
+      Frame.
+    </h1>
+    <p class="hero-sub">
+      I transform raw footage into compelling cinematic narratives. With over 2 years of experience in commercial, documentary, and creative video editing.
+    </p>
+    <div class="hero-cta">
+      <a href="#work" class="btn-primary">View My Work</a>
+      <a href="#contact" class="btn-ghost">Start a Project</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-filmstrip-decor" aria-hidden="true">
+      <div class="fhole"></div><div class="fhole"></div><div class="fhole"></div>
+      <div class="fhole"></div><div class="fhole"></div><div class="fhole"></div>
+      <div class="fhole"></div><div class="fhole"></div><div class="fhole"></div>
+      <div class="fhole"></div><div class="fhole"></div><div class="fhole"></div>
+    </div>
+
+    <div class="hero-reel-frame">
+      <div class="hero-reel-placeholder">
+        <div class="play-btn" aria-label="Play showreel">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <polygon points="6,3 15,9 6,15" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="reel-label">Play Showreel 2024</div>
+      </div>
+
+      <!-- film strip right -->
+      <div class="filmstrip" aria-hidden="true">
+        <div class="filmstrip-hole"></div><div class="filmstrip-hole"></div>
+        <div class="filmstrip-hole"></div><div class="filmstrip-hole"></div>
+        <div class="filmstrip-hole"></div><div class="filmstrip-hole"></div>
+        <div class="filmstrip-hole"></div><div class="filmstrip-hole"></div>
+        <div class="filmstrip-hole"></div><div class="filmstrip-hole"></div>
+        <div class="filmstrip-hole"></div><div class="filmstrip-hole"></div>
+        <div class="filmstrip-hole"></div><div class="filmstrip-hole"></div>
+        <div class="filmstrip-hole"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" aria-label="Statistics">
+  <div class="stat-item">
+    <div class="stat-num">7+</div>
+    <div class="stat-label">Years Experience</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">120</div>
+    <div class="stat-label">Projects Delivered</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">40M+</div>
+    <div class="stat-label">Views Generated</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">98%</div>
+    <div class="stat-label">Client Satisfaction</div>
+  </div>
+</div>
+
+<!-- WORK -->
+<section id="work" class="section work-section">
+  <div class="work-header">
+    <div>
+      <div class="section-tag">Selected Work</div>
+      <h2 class="section-title">Portfolio</h2>
+    </div>
+    <a href="#" class="btn-ghost" style="font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;color:var(--text-muted);display:flex;align-items:center;gap:0.5rem;">View All Projects</a>
+  </div>
+
+  <div class="work-grid">
+
+    <div class="project-card large">
+      <div class="card-thumb">
+        <div class="card-bg card-bg-1">
+          <div class="card-scene">
+            <div class="scene-lines"></div>
+            <div class="scene-icon">
+              <svg width="70" height="70" viewBox="0 0 70 70" fill="none">
+                <rect x="10" y="22" width="50" height="32" rx="2" stroke="#C9A84C" stroke-opacity="0.3" stroke-width="1"/>
+                <polygon points="28,30 28,44 44,37" fill="#C9A84C" fill-opacity="0.25"/>
+                <rect x="10" y="56" width="14" height="6" rx="1" fill="#C9A84C" fill-opacity="0.12"/>
+                <circle cx="60" cy="12" r="6" stroke="#8B2E2E" stroke-opacity="0.5" stroke-width="1"/>
+                <line x1="56" y1="8" x2="64" y2="16" stroke="#8B2E2E" stroke-opacity="0.4" stroke-width="1"/>
+                <line x1="64" y1="8" x2="56" y2="16" stroke="#8B2E2E" stroke-opacity="0.4" stroke-width="1"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="card-play-overlay">
+          <div class="mini-play" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <polygon points="4,2 12,7 4,12" fill="currentColor"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Brand Film</div>
+        <div class="card-title">Horizon — Launch Campaign</div>
+        <div class="card-meta">
+          <span class="meta-item"><span class="meta-dot"></span>3:45 min</span>
+          <span class="meta-item"><span class="meta-dot"></span>2024</span>
+          <span class="meta-item"><span class="meta-dot"></span>4K Color Grade</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card medium">
+      <div class="card-thumb">
+        <div class="card-bg card-bg-2">
+          <div class="card-scene">
+            <div class="scene-lines"></div>
+            <div class="scene-icon">
+              <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                <circle cx="30" cy="30" r="20" stroke="#5DCAA5" stroke-opacity="0.2" stroke-width="1"/>
+                <circle cx="30" cy="30" r="12" stroke="#5DCAA5" stroke-opacity="0.3" stroke-width="1"/>
+                <circle cx="30" cy="30" r="4" fill="#5DCAA5" fill-opacity="0.4"/>
+                <line x1="30" y1="10" x2="30" y2="4" stroke="#5DCAA5" stroke-opacity="0.3" stroke-width="1"/>
+                <line x1="30" y1="56" x2="30" y2="50" stroke="#5DCAA5" stroke-opacity="0.3" stroke-width="1"/>
+                <line x1="10" y1="30" x2="4" y2="30" stroke="#5DCAA5" stroke-opacity="0.3" stroke-width="1"/>
+                <line x1="56" y1="30" x2="50" y2="30" stroke="#5DCAA5" stroke-opacity="0.3" stroke-width="1"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="card-play-overlay">
+          <div class="mini-play" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <polygon points="4,2 12,7 4,12" fill="currentColor"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Documentary</div>
+        <div class="card-title">Eye of the City</div>
+        <div class="card-meta">
+          <span class="meta-item"><span class="meta-dot"></span>18 min</span>
+          <span class="meta-item"><span class="meta-dot"></span>2024</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card small">
+      <div class="card-thumb">
+        <div class="card-bg card-bg-3">
+          <div class="card-scene">
+            <div class="scene-lines"></div>
+            <div class="scene-icon">
+              <svg width="55" height="55" viewBox="0 0 55 55" fill="none">
+                <rect x="8" y="20" width="16" height="22" rx="1" stroke="#EF9F27" stroke-opacity="0.3" stroke-width="1"/>
+                <rect x="28" y="14" width="16" height="28" rx="1" stroke="#EF9F27" stroke-opacity="0.4" stroke-width="1"/>
+                <rect x="8" y="44" width="36" height="1" fill="#EF9F27" fill-opacity="0.2"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="card-play-overlay">
+          <div class="mini-play" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <polygon points="4,2 12,7 4,12" fill="currentColor"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Music Video</div>
+        <div class="card-title">Gold Rush — Neon Atlas</div>
+        <div class="card-meta">
+          <span class="meta-item"><span class="meta-dot"></span>4:12 min</span>
+          <span class="meta-item"><span class="meta-dot"></span>2023</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card wide">
+      <div class="card-thumb">
+        <div class="card-bg card-bg-4">
+          <div class="card-scene">
+            <div class="scene-lines"></div>
+            <div class="scene-icon">
+              <svg width="75" height="55" viewBox="0 0 75 55" fill="none">
+                <rect x="5" y="15" width="65" height="28" rx="2" stroke="#AFA9EC" stroke-opacity="0.25" stroke-width="1"/>
+                <line x1="5" y1="22" x2="70" y2="22" stroke="#AFA9EC" stroke-opacity="0.1" stroke-width="0.5"/>
+                <rect x="10" y="26" width="10" height="10" rx="1" fill="#AFA9EC" fill-opacity="0.12"/>
+                <rect x="24" y="26" width="20" height="10" rx="1" fill="#AFA9EC" fill-opacity="0.08"/>
+                <rect x="48" y="26" width="15" height="10" rx="1" fill="#AFA9EC" fill-opacity="0.08"/>
+                <rect x="20" y="45" width="35" height="4" rx="1" fill="#AFA9EC" fill-opacity="0.1"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="card-play-overlay">
+          <div class="mini-play" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <polygon points="4,2 12,7 4,12" fill="currentColor"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Commercial</div>
+        <div class="card-title">Nexum — 30s Brand Spot</div>
+        <div class="card-meta">
+          <span class="meta-item"><span class="meta-dot"></span>:30 sec</span>
+          <span class="meta-item"><span class="meta-dot"></span>2024</span>
+          <span class="meta-item"><span class="meta-dot"></span>Broadcast</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card medium" style="grid-column: span 4;">
+      <div class="card-thumb">
+        <div class="card-bg card-bg-1" style="background: linear-gradient(135deg, #0a0a14 0%, #131330 50%, #0a0a14 100%);">
+          <div class="card-scene">
+            <div class="scene-lines"></div>
+            <div class="scene-icon">
+              <svg width="55" height="55" viewBox="0 0 55 55" fill="none">
+                <path d="M10 40 Q20 10 27 28 Q34 42 45 15" stroke="#85B7EB" stroke-opacity="0.4" stroke-width="1.5" fill="none"/>
+                <circle cx="10" cy="40" r="2.5" fill="#85B7EB" fill-opacity="0.3"/>
+                <circle cx="45" cy="15" r="2.5" fill="#85B7EB" fill-opacity="0.3"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="card-play-overlay">
+          <div class="mini-play" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <polygon points="4,2 12,7 4,12" fill="currentColor"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Short Film</div>
+        <div class="card-title">Waveform</div>
+        <div class="card-meta">
+          <span class="meta-item"><span class="meta-dot"></span>12 min</span>
+          <span class="meta-item"><span class="meta-dot"></span>2023</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<!-- SERVICES -->
+<section id="services" class="services-section">
+  <div class="section-tag">What I Do</div>
+  <h2 class="section-title">Services</h2>
+
+  <div class="services-grid">
+    <div class="service-item">
+      <div class="service-num">01</div>
+      <div class="service-name">Video Editing</div>
+      <p class="service-desc">Narrative-driven editing for brand films, documentaries, commercials, and social content. Pacing, rhythm, and storytelling that keeps viewers locked in.</p>
+      <div class="service-tools">
+        <span class="tool-tag">Premiere Pro</span>
+        <span class="tool-tag">Final Cut X</span>
+        <span class="tool-tag">DaVinci</span>
+      </div>
+    </div>
+
+    <div class="service-item">
+      <div class="service-num">02</div>
+      <div class="service-name">Color Grading</div>
+      <p class="service-desc">Cinematic color work that transforms raw footage into a mood. LUT creation, scene-to-scene matching, and full film-grade finishing for any deliverable format.</p>
+      <div class="service-tools">
+        <span class="tool-tag">DaVinci Resolve</span>
+        <span class="tool-tag">Lumetri</span>
+        <span class="tool-tag">FilmConvert</span>
+      </div>
+    </div>
+
+    <div class="service-item">
+      <div class="service-num">03</div>
+      <div class="service-name">Motion Graphics</div>
+      <p class="service-desc">Titles, transitions, animated lower-thirds, and motion design sequences that elevate production value without distracting from the story.</p>
+      <div class="service-tools">
+        <span class="tool-tag">After Effects</span>
+        <span class="tool-tag">Motion</span>
+        <span class="tool-tag">Lottie</span>
+      </div>
+    </div>
+
+    <div class="service-item">
+      <div class="service-num">04</div>
+      <div class="service-name">Sound Design</div>
+      <p class="service-desc">Dialogue cleanup, SFX layering, music scoring and sync. Audio that completes the picture — invisible when it should be, powerful when it needs to hit.</p>
+      <div class="service-tools">
+        <span class="tool-tag">Audition</span>
+        <span class="tool-tag">Logic Pro</span>
+        <span class="tool-tag">iZotope RX</span>
+      </div>
+    </div>
+
+    <div class="service-item">
+      <div class="service-num">05</div>
+      <div class="service-name">Social Content</div>
+      <p class="service-desc">Optimized Reels, TikToks, and YouTube edits. Platform-native formatting, subtitles, and retention-focused cuts designed to perform.</p>
+      <div class="service-tools">
+        <span class="tool-tag">CapCut</span>
+        <span class="tool-tag">Premiere Rush</span>
+        <span class="tool-tag">Canva</span>
+      </div>
+    </div>
+
+    <div class="service-item">
+      <div class="service-num">06</div>
+      <div class="service-name">VFX & Compositing</div>
+      <p class="service-desc">Green screen compositing, tracking, and light effects. From invisible corrections to dramatic visual moments — seamlessly integrated into the edit.</p>
+      <div class="service-tools">
+        <span class="tool-tag">After Effects</span>
+        <span class="tool-tag">Nuke</span>
+        <span class="tool-tag">Fusion</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<!-- ABOUT -->
+<section id="about" class="about-section">
+  <div class="about-visual">
+    <div class="about-frame">
+      <div class="about-frame-inner">ALEX<br>MERCER</div>
+      <div class="about-corner tl"></div>
+      <div class="about-corner tr"></div>
+      <div class="about-corner bl"></div>
+      <div class="about-corner br"></div>
+    </div>
+    <div class="about-badge">
+      <div class="badge-num">7+</div>
+      <div class="badge-label">Years<br>in the Cut</div>
+    </div>
+  </div>
+
+  <div class="about-content">
+    <div class="section-tag">About Me</div>
+    <h2 class="section-title">The Craft Behind the Cut</h2>
+    <p class="about-text">I'm a freelance video editor based in Mumbai, working with brands, filmmakers, and content creators to bring stories to life. I started in broadcast television, cut my teeth on documentary series, and now work across commercial, narrative, and digital formats.</p>
+    <p class="about-text">My approach is simple: understand the story first, then find the edit. Good editing is invisible — you feel it before you see it. I work closely with clients from rough cut to final delivery, making sure every frame earns its place.</p>
+
+    <div class="skills-list">
+      <span class="skill-line">Adobe Premiere Pro</span>
+      <span class="skill-line">DaVinci Resolve</span>
+      <span class="skill-line">After Effects</span>
+      <span class="skill-line">Final Cut Pro X</span>
+      <span class="skill-line">Narrative Editing</span>
+      <span class="skill-line">Broadcast Standards</span>
+      <span class="skill-line">Remote Collaboration</span>
+      <span class="skill-line">Multi-cam Editing</span>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="section-tag">Kind Words</div>
+  <h2 class="section-title">Client Feedback</h2>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="quote-mark">"</div>
+      <p class="testimonial-text">Alex transformed our raw footage into a brand film we're genuinely proud to show. The pacing, music choices, the color — everything just clicked. Delivered ahead of schedule, too.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">SR</div>
+        <div>
+          <div class="author-name">Shreya Rao</div>
+          <div class="author-role">Marketing Director, Luminary Co.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="quote-mark">"</div>
+      <p class="testimonial-text">We've worked with several editors before, but the level of attention to story here was different. Alex really listened to what we were trying to say and found it in the footage.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">KT</div>
+        <div>
+          <div class="author-name">Kabir Thakur</div>
+          <div class="author-role">Documentary Director</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="quote-mark">"</div>
+      <p class="testimonial-text">Three rounds of revision and he nailed every note without complaint. Our YouTube channel went from 10K to 120K in six months. The thumbnails and edits just perform.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">PJ</div>
+        <div>
+          <div class="author-name">Priya Joshi</div>
+          <div class="author-role">Content Creator, @PriyaUnfiltered</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="contact-info">
+    <div class="section-tag">Get in Touch</div>
+    <h2 class="contact-title">Let's make something worth watching.</h2>
+    <p class="contact-subtitle">Open for freelance projects, long-term collabs, and anything in between. Response time: usually within 24 hours.</p>
+
+    <div class="contact-links">
+      <a href="mailto:alex@mercer.edit" class="contact-link">
+        <div class="contact-link-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="4" width="12" height="9" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M2 5l6 4 6-4" stroke="currentColor" stroke-width="1.2"/></svg>
+        </div>
+        alex@mercer.edit
+      </a>
+      <a href="#" class="contact-link">
+        <div class="contact-link-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="3" width="10" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.2"/><circle cx="11" cy="5" r="0.7" fill="currentColor"/></svg>
+        </div>
+        @alexmercer.edit
+      </a>
+      <a href="#" class="contact-link">
+        <div class="contact-link-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12L6.5 7.5M14 4l-3.5 3.5M2 12l4-1L14 4M2 12l1-4L14 4" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+        </div>
+        Available on Contra & Toptal
+      </a>
+    </div>
+  </div>
+
+  <form class="contact-form" onsubmit="return false;">
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="name">Name</label>
+        <input class="form-input" id="name" type="text" placeholder="Your name">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">Email</label>
+        <input class="form-input" id="email" type="email" placeholder="your@email.com">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="project-type">Project Type</label>
+      <input class="form-input" id="project-type" type="text" placeholder="e.g. Brand Film, YouTube, Music Video…">
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="message">Message</label>
+      <textarea class="form-textarea" id="message" placeholder="Tell me about your project — timeline, budget, vibe…"></textarea>
+    </div>
+    <button type="submit" class="form-submit">Send Message →</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Alex&nbsp;Mercer</a>
+  <span class="footer-copy">© 2024 — All rights reserved</span>
+  <div class="footer-socials">
+    <a href="#" class="social-link">Instagram</a>
+    <a href="#" class="social-link">Vimeo</a>
+    <a href="#" class="social-link">LinkedIn</a>
+  </div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, .project-card, .service-item, .play-btn').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '20px';
+      cursor.style.height = '20px';
+      ring.style.width = '54px';
+      ring.style.height = '54px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '10px';
+      cursor.style.height = '10px';
+      ring.style.width = '36px';
+      ring.style.height = '36px';
+    });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.project-card, .service-item, .testimonial-card, .stat-item').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = `opacity 0.5s ease ${i * 0.07}s, transform 0.5s ease ${i * 0.07}s`;
+    observer.observe(el);
+  });
+
+  // Form submit
+  document.querySelector('.form-submit').addEventListener('click', function() {
+    const name = document.getElementById('name').value;
+    if (name.trim()) {
+      this.textContent = '✓ Sent!';
+      this.style.background = '#5DCAA5';
+      setTimeout(() => {
+        this.textContent = 'Send Message →';
+        this.style.background = '';
+      }, 3000);
+    }
+  });
+</script>
+</body>
+</html>

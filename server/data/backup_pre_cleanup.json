@@ -1,0 +1,328 @@
+{
+  "timestamp": "2026-09-14T05:37:24.132Z",
+  "uri": "mongodb://127.0.0.1:27017/manish_portfolio",
+  "profiles": [
+    {
+      "_id": "6aa76b61f8b84e48aff55ff4",
+      "name": "Manish",
+      "heroTagline": "Video Editor",
+      "heroHeading": {
+        "part1": "Craft the",
+        "highlight": "Perfect",
+        "part2": "Frame."
+      },
+      "heroSubtext": "I transform raw footage into compelling cinematic narratives. With over 2 years of experience in commercial, documentary, and creative video editing.",
+      "showreelLabel": "Play Showreel 2024",
+      "showreelVideoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "experienceYears": "7+",
+      "projectsDelivered": "120+",
+      "viewsGenerated": "40M+",
+      "clientSatisfaction": "98%",
+      "aboutTagline": "The Craft Behind the Cut",
+      "aboutBio1": "I'm Manish, a freelance video editor based in Mumbai, working with brands, filmmakers, and content creators to bring stories to life. I started in broadcast television, cut my teeth on documentary series, and now work across commercial, narrative, and digital formats.",
+      "aboutBio2": "My approach is simple: understand the story first, then find the edit. Good editing is invisible — you feel it before you see it. I work closely with clients from rough cut to final delivery, making sure every frame earns its place.",
+      "skills": [
+        "Adobe Premiere Pro",
+        "DaVinci Resolve Studio",
+        "After Effects",
+        "Final Cut Pro X",
+        "Narrative Editing",
+        "Broadcast Standards",
+        "Remote Collaboration",
+        "Multi-cam Editing"
+      ],
+      "email": "manish.edit@portfolio.dev",
+      "socials": {
+        "instagram": "https://instagram.com",
+        "vimeo": "https://vimeo.com",
+        "linkedin": "https://linkedin.com",
+        "youtube": "https://youtube.com"
+      },
+      "createdAt": "2026-09-14T03:34:57.859Z",
+      "updatedAt": "2026-09-14T03:34:57.859Z",
+      "__v": 0
+    }
+  ],
+  "projects": [
+    {
+      "_id": "6aa76b61f8b84e48aff55ff6",
+      "title": "Horizon — Launch Campaign",
+      "category": "Brand Film",
+      "duration": "3:45 min",
+      "year": "2024",
+      "tag": "4K Color Grade",
+      "description": "Cinematic brand story emphasizing high-contrast cinematography and dynamic soundscapes.",
+      "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "layoutSpan": "large",
+      "gradientType": "card-bg-1",
+      "featured": true,
+      "order": 1,
+      "__v": 0,
+      "createdAt": "2026-09-14T03:34:57.878Z",
+      "updatedAt": "2026-09-14T03:34:57.878Z"
+    },
+    {
+      "_id": "6aa76b61f8b84e48aff55ff7",
+      "title": "Eye of the City",
+      "category": "Documentary",
+      "duration": "18 min",
+      "year": "2024",
+      "tag": "Documentary Cut",
+      "description": "Deep-dive documentary capturing urban life, architecture, and untold human narratives.",
+      "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "layoutSpan": "medium",
+      "gradientType": "card-bg-2",
+      "featured": true,
+      "order": 2,
+      "__v": 0,
+      "createdAt": "2026-09-14T03:34:57.878Z",
+      "updatedAt": "2026-09-14T03:34:57.878Z"
+    },
+    {
+      "_id": "6aa76b61f8b84e48aff55ff8",
+      "title": "Gold Rush — Neon Atlas",
+      "category": "Music Video",
+      "duration": "4:12 min",
+      "year": "2023",
+      "tag": "Rhythm Sync",
+      "description": "High-energy music visual with precision beat matching, neon grading, and seamless speed ramps.",
+      "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "layoutSpan": "small",
+      "gradientType": "card-bg-3",
+      "featured": true,
+      "order": 3,
+      "__v": 0,
+      "createdAt": "2026-09-14T03:34:57.879Z",
+      "updatedAt": "2026-09-14T03:34:57.879Z"
+    },
+    {
+      "_id": "6aa76b61f8b84e48aff55ff9",
+      "title": "Nexum — 30s Brand Spot",
+      "category": "Commercial",
+      "duration": ":30 sec",
+      "year": "2024",
+      "tag": "Broadcast",
+      "description": "Tight 30-second commercial cut built for maximum audience hook and broadcast compliance.",
+      "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "layoutSpan": "wide",
+      "gradientType": "card-bg-4",
+      "featured": true,
+      "order": 4,
+      "__v": 0,
+      "createdAt": "2026-09-14T03:34:57.879Z",
+      "updatedAt": "2026-09-14T03:34:57.879Z"
+    },
+    {
+      "_id": "6aa76b61f8b84e48aff55ffa",
+      "title": "Waveform",
+      "category": "Short Film",
+      "duration": "12 min",
+      "year": "2023",
+      "tag": "Festival Selection",
+      "description": "Subtle, atmospheric pacing exploring memory, sound, and stillness.",
+      "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "layoutSpan": "medium",
+      "gradientType": "card-bg-1",
+      "featured": true,
+      "order": 5,
+      "__v": 0,
+      "createdAt": "2026-09-14T03:34:57.879Z",
+      "updatedAt": "2026-09-14T03:34:57.879Z"
+    }
+  ],
+  "services": [
+    {
+      "_id": "6aa76b61f8b84e48aff55ffc",
+      "num": "01",
+      "name": "Video Editing",
+      "desc": "Narrative-driven editing for brand films, documentaries, commercials, and social content. Pacing, rhythm, and storytelling that keeps viewers locked in.",
+      "tools": [
+        "Premiere Pro",
+        "Final Cut X",
+        "DaVinci"
+      ],
+      "order": 1,
+      "__v": 0,
+      "createdAt": "2026-09-14T03:34:57.893Z",
+      "updatedAt": "2026-09-14T03:34:57.893Z"
+    },
+    {
+      "_id": "6aa76b61f8b84e48aff55ffd",
+      "num": "02",
+      "name": "Color Grading",
+      "desc": "Cinematic color work that transforms raw footage into a mood. LUT creation, scene-to-scene matching, and full film-grade finishing for any deliverable format.",
+      "tools": [
+        "DaVinci Resolve",
+        "Lumetri",
+        "FilmConvert"
+      ],
+      "order": 2,
+      "__v": 0,
+      "createdAt": "2026-09-14T03:34:57.894Z",
+      "updatedAt": "2026-09-14T03:34:57.894Z"
+    },
+    {
+      "_id": "6aa76b61f8b84e48aff55ffe",
+      "num": "03",
+      "name": "Motion Graphics",
+      "desc": "Titles, transitions, animated lower-thirds, and motion design sequences that elevate production value without distracting from the story.",
+      "tools": [
+        "After Effects",
+        "Motion",
+        "Lottie"
+      ],
+      "order": 3,
+      "__v": 0,
+      "createdAt": "2026-09-14T03:34:57.894Z",
+      "updatedAt": "2026-09-14T03:34:57.894Z"
+    },
+    {
+      "_id": "6aa76b61f8b84e48aff55fff",
+      "num": "04",
+      "name": "Sound Design",
+      "desc": "Dialogue cleanup, SFX layering, music scoring and sync. Audio that completes the picture — invisible when it should be, powerful when it needs to hit.",
+      "tools": [
+        "Audition",
+        "Logic Pro",
+        "iZotope RX"
+      ],
+      "order": 4,
+      "__v": 0,
+      "createdAt": "2026-09-14T03:34:57.894Z",
+      "updatedAt": "2026-09-14T03:34:57.894Z"
+    },
+    {
+      "_id": "6aa76b61f8b84e48aff56000",
+      "num": "05",
+      "name": "Social Content",
+      "desc": "Optimized Reels, TikToks, and YouTube edits. Platform-native formatting, subtitles, and retention-focused cuts designed to perform.",
+      "tools": [
+        "CapCut",
+        "Premiere Rush",
+        "Canva"
+      ],
+      "order": 5,
+      "__v": 0,
+      "createdAt": "2026-09-14T03:34:57.894Z",
+      "updatedAt": "2026-09-14T03:34:57.894Z"
+    },
+    {
+      "_id": "6aa76b61f8b84e48aff56001",
+      "num": "06",
+      "name": "VFX & Compositing",
+      "desc": "Green screen compositing, tracking, and light effects. From invisible corrections to dramatic visual moments — seamlessly integrated into the edit.",
+      "tools": [
+        "After Effects",
+        "Nuke",
+        "Fusion"
+      ],
+      "order": 6,
+      "__v": 0,
+      "createdAt": "2026-09-14T03:34:57.894Z",
+      "updatedAt": "2026-09-14T03:34:57.894Z"
+    }
+  ],
+  "testimonials": [
+    {
+      "_id": "6aa76b61f8b84e48aff56003",
+      "quote": "Manish transformed our raw footage into a brand film we're genuinely proud to show. The pacing, music choices, the color — everything just clicked. Delivered ahead of schedule, too.",
+      "author": "Shreya Rao",
+      "role": "Marketing Director, Luminary Co.",
+      "initials": "SR",
+      "order": 1,
+      "__v": 0,
+      "createdAt": "2026-09-14T03:34:57.900Z",
+      "updatedAt": "2026-09-14T03:34:57.900Z"
+    },
+    {
+      "_id": "6aa76b61f8b84e48aff56004",
+      "quote": "We've worked with several editors before, but the level of attention to story here was different. Manish really listened to what we were trying to say and found it in the footage.",
+      "author": "Kabir Thakur",
+      "role": "Documentary Director",
+      "initials": "KT",
+      "order": 2,
+      "__v": 0,
+      "createdAt": "2026-09-14T03:34:57.900Z",
+      "updatedAt": "2026-09-14T03:34:57.900Z"
+    },
+    {
+      "_id": "6aa76b61f8b84e48aff56005",
+      "quote": "Three rounds of revision and he nailed every note without complaint. Our YouTube channel went from 10K to 120K in six months. The thumbnails and edits just perform.",
+      "author": "Priya Joshi",
+      "role": "Content Creator, @PriyaUnfiltered",
+      "initials": "PJ",
+      "order": 3,
+      "__v": 0,
+      "createdAt": "2026-09-14T03:34:57.900Z",
+      "updatedAt": "2026-09-14T03:34:57.900Z"
+    }
+  ],
+  "messages": [
+    {
+      "_id": "6aa76b61f8b84e48aff56007",
+      "name": "Aarav Mehta",
+      "email": "aarav@studiohorizon.com",
+      "projectType": "Brand Film",
+      "message": "Hey Manish! We love your cinematic color grading work. We have a 4K commercial campaign shooting next month and would love to book your post-production services.",
+      "status": "unread",
+      "__v": 0,
+      "createdAt": "2026-09-14T03:34:57.906Z",
+      "updatedAt": "2026-09-14T03:34:57.906Z"
+    },
+    {
+      "_id": "6aa76b61f8b84e48aff56008",
+      "name": "Elena Rostova",
+      "email": "elena@nordicdocs.org",
+      "projectType": "Documentary",
+      "message": "We are editing a 25-minute environmental documentary. Looking for a lead colorist and narrative polisher. Let us know your availability!",
+      "status": "read",
+      "__v": 0,
+      "createdAt": "2026-09-14T03:34:57.906Z",
+      "updatedAt": "2026-09-14T03:34:57.906Z"
+    },
+    {
+      "_id": "6aa76c97b0bdcbf323103f3c",
+      "name": "Rahul Sharma",
+      "email": "rahul@cinemaworks.in",
+      "projectType": "Brand Film",
+      "message": "Hi Manish, we have an upcoming luxury commercial shoot and want you for post-production.",
+      "status": "unread",
+      "createdAt": "2026-09-14T03:40:07.711Z",
+      "updatedAt": "2026-09-14T03:40:07.711Z",
+      "__v": 0
+    },
+    {
+      "_id": "6aa76d3bb0bdcbf323103f48",
+      "name": "Ananya Roy",
+      "email": "ananya@creator.io",
+      "projectType": "Documentary",
+      "message": "Testing live MERN contact form submission to MongoDB",
+      "status": "unread",
+      "createdAt": "2026-09-14T03:42:51.263Z",
+      "updatedAt": "2026-09-14T03:42:51.263Z",
+      "__v": 0
+    },
+    {
+      "_id": "6aa76d95b0bdcbf323103f4a",
+      "name": "Ananya Roy",
+      "email": "ananya@creator.io",
+      "projectType": "Documentary",
+      "message": "Testing live MERN contact form submission to MongoDB",
+      "status": "unread",
+      "createdAt": "2026-09-14T03:44:21.189Z",
+      "updatedAt": "2026-09-14T03:44:21.189Z",
+      "__v": 0
+    },
+    {
+      "_id": "6aa76e29b0bdcbf323103f4c",
+      "name": "Ananya Roy",
+      "email": "ananya@creator.io",
+      "projectType": "Documentary",
+      "message": "Testing live MERN contact form submission to MongoDB",
+      "status": "unread",
+      "createdAt": "2026-09-14T03:46:49.069Z",
+      "updatedAt": "2026-09-14T03:46:49.069Z",
+      "__v": 0
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "manish-portfolio-mern",
+  "version": "1.0.0",
+  "description": "Full-stack MERN Video Editor Portfolio with MongoDB Compass Integration",
+  "main": "server/server.js",
+  "scripts": {
+    "server": "node server/server.js",
+    "server:dev": "nodemon server/server.js",
+    "client": "npm.cmd --prefix client run dev",
+    "client:build": "npm.cmd --prefix client run build",
+    "predev": "npx.cmd -y kill-port 5000 5173",
+    "dev": "concurrently --kill-others-on-fail \"npm.cmd run server\" \"npm.cmd run client\"",
+    "seed": "node server/scripts/seed.js",
+    "kill:ports": "npx.cmd -y kill-port 5000 5173",
+    "install:all": "npm.cmd install && npm.cmd --prefix server install && npm.cmd --prefix client install"
+  },
+  "keywords": [
+    "mern",
+    "portfolio",
+    "mongodb",
+    "express",
+    "react",
+    "node"
+  ],
+  "author": "Manish",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.2.4"
+  }
+}
