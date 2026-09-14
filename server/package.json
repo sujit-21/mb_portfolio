@@ -4,12 +4,11 @@
   "description": "Express and MongoDB backend for Manish Portfolio",
   "main": "server.js",
   "scripts": {
-    "prestart": "npx.cmd -y kill-port 5000",
     "start": "node server.js",
-    "predev": "npx.cmd -y kill-port 5000",
+    "predev": "npx -y kill-port 5000",
     "dev": "nodemon server.js",
     "seed": "node scripts/seed.js",
-    "kill:port": "npx.cmd -y kill-port 5000"
+    "kill:port": "npx -y kill-port 5000"
   },
   "dependencies": {
     "cors": "^2.8.5",
