@@ -1,14 +1,16 @@
+const path = require('path');
+const dotenv = require('dotenv');
+
+// Load environment variables from server/.env before anything else
+dotenv.config({ path: path.join(__dirname, '.env') });
+
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 const connectDB = require('./config/db');
 const apiRoutes = require('./routes/api');
 
-const path = require('path');
-// Load environment variables from server/.env
-dotenv.config({ path: path.join(__dirname, '.env') });
-
-// Connect to MongoDB (MongoDB Compass accessible at this URI)
+// Connect to MongoDB
 connectDB();
 
 const app = express();
@@ -33,9 +35,14 @@ app.use('/api', apiRoutes);
 
 // Root informational endpoint
 app.get('/', (req, res) => {
+  const isConnected = mongoose.connection.readyState === 1;
   res.json({
     message: 'Manish Portfolio MERN API is running',
-    compassStatus: 'Connect MongoDB Compass to mongodb://127.0.0.1:27017/manish_portfolio',
+    database: {
+      status: isConnected ? 'Connected' : 'Disconnected',
+      name: mongoose.connection.name || 'manish_portfolio',
+      host: mongoose.connection.host || 'unknown',
+    },
     docs: {
       profile: '/api/profile',
       projects: '/api/projects',
@@ -64,8 +71,7 @@ const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT, () => {
   console.log(`=======================================================`);
   console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📦 MongoDB Database: mongodb://127.0.0.1:27017/manish_portfolio`);
-  console.log(`🔍 Open MongoDB Compass and connect to inspect all data!`);
+  console.log(`📦 MongoDB Database: ${mongoose.connection.name || 'manish_portfolio'}`);
   console.log(`=======================================================`);
 });
 
@@ -87,3 +93,6 @@ process.on('unhandledRejection', (err) => {
 process.on('uncaughtException', (err) => {
   console.error(`Uncaught Exception: ${err.message || err}`);
 });
+
+module.exports = app;
+

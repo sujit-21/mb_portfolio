@@ -4,15 +4,16 @@
   "description": "Full-stack MERN Video Editor Portfolio with MongoDB Compass Integration",
   "main": "server/server.js",
   "scripts": {
+    "build": "npm --prefix client run build",
     "server": "node server/server.js",
     "server:dev": "nodemon server/server.js",
-    "client": "npm.cmd --prefix client run dev",
-    "client:build": "npm.cmd --prefix client run build",
-    "predev": "npx.cmd -y kill-port 5000 5173",
-    "dev": "concurrently --kill-others-on-fail \"npm.cmd run server\" \"npm.cmd run client\"",
+    "client": "npm --prefix client run dev",
+    "client:build": "npm --prefix client run build",
+    "predev": "npx -y kill-port 5000 5173",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "seed": "node server/scripts/seed.js",
-    "kill:ports": "npx.cmd -y kill-port 5000 5173",
-    "install:all": "npm.cmd install && npm.cmd --prefix server install && npm.cmd --prefix client install"
+    "kill:ports": "npx -y kill-port 5000 5173",
+    "install:all": "npm install && npm --prefix server install && npm --prefix client install"
   },
   "keywords": [
     "mern",

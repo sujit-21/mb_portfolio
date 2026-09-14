@@ -17,6 +17,7 @@ build
 .env.*
 !.env.example
 *.env
+server/data/legacy_v1_backup*
 
 # Operating System & Editor Files
 .DS_Store
