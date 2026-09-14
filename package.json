@@ -4,7 +4,7 @@
   "description": "Full-stack MERN Video Editor Portfolio with MongoDB Compass Integration",
   "main": "server/server.js",
   "scripts": {
-    "build": "npm --prefix client run build",
+    "build": "npm --prefix client install && npm --prefix client run build",
     "server": "node server/server.js",
     "server:dev": "nodemon server/server.js",
     "client": "npm --prefix client run dev",
@@ -25,6 +25,12 @@
   ],
   "author": "Manish",
   "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5"
+  },
   "devDependencies": {
     "concurrently": "^9.2.4"
   }
