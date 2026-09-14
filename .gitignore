@@ -15,7 +15,6 @@ build
 # Environment variables & secrets (CRITICAL: do NOT commit .env files)
 .env
 .env.*
-!.env.example
 *.env
 server/data/legacy_v1_backup*
 
