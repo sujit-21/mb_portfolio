@@ -1333,10 +1333,10 @@ footer {
   background: transparent;
   border: none;
   color: var(--text-muted);
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 0.5rem 0.4rem;
+  padding: 0.4rem 0.4rem;
   cursor: pointer;
   border-bottom: 2px solid transparent;
   transition: all 0.2s;
