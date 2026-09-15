@@ -8,6 +8,7 @@ const Service = require('../models/Service');
 const Testimonial = require('../models/Testimonial');
 const Message = require('../models/Message');
 const AdminUser = require('../models/AdminUser');
+const { sendContactNotification } = require('../services/emailService');
 
 // ==================== HEALTH ====================
 router.get('/health', (req, res) => {
@@ -208,9 +209,22 @@ router.post('/messages', async (req, res) => {
 
     console.log(`[Contact Form] New message from ${name} <${email}> stored in MongoDB!`);
 
+    // Safely send email notification via Resend
+    sendContactNotification({ name, email, projectType, message })
+      .then((emailRes) => {
+        if (emailRes.success) {
+          console.log(`[Contact Form] Email notification sent to admin via Resend (ID: ${emailRes.id})`);
+        } else {
+          console.warn('[Contact Form] Resend notification not sent:', emailRes.error || emailRes.reason);
+        }
+      })
+      .catch((err) => {
+        console.error('[Contact Form] Unexpected error in email notification:', err);
+      });
+
     res.status(201).json({
       success: true,
-      message: "Thank you! Your message has been received and saved to MongoDB.",
+      message: "Thank you! Your message has been received and saved.",
       data: newMessage,
     });
   } catch (error) {

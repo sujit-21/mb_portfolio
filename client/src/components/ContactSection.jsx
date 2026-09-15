@@ -49,7 +49,7 @@ export default function ContactSection({ profile, onMessageSent }) {
       if (response.ok && data.success) {
         setStatus({
           type: 'success',
-          text: '✓ Message received! Saved directly to MongoDB & Compass.',
+          text: '✓ Message Sent Successfully ! I Will Get Back To You As Soon As Possible.',
         });
         setFormData({
           name: '',
