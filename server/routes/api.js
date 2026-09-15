@@ -271,7 +271,7 @@ router.delete('/messages/:id', async (req, res) => {
 });
 
 // ==================== ADMIN AUTHENTICATION ====================
-const JWT_SECRET = process.env.JWT_SECRET || 'super_secret_jwt_key_portfolio_2024';
+const JWT_SECRET = process.env.JWT_SECRET || process.env.JWT_ACCESS_SECRET || 'super_secret_jwt_key_portfolio_2024';
 
 function generateAuthToken(username) {
   const header = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT' })).toString('base64url');
