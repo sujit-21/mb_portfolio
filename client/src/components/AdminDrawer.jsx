@@ -969,6 +969,18 @@ export default function AdminDrawer({
             </p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+            <button
+              type="button"
+              className="admin-portfolio-btn"
+              onClick={() => {
+                onClose();
+                setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 150);
+              }}
+              title="Return to public portfolio view"
+            >
+              <span>🌐</span>
+              <span>View Portfolio</span>
+            </button>
             {onLogout && (
               <button
                 type="button"

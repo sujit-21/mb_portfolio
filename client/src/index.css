@@ -1939,6 +1939,33 @@ footer {
   box-shadow: 0 4px 15px rgba(226, 75, 74, 0.3);
 }
 
+/* ADMIN CONSOLE — VIEW PORTFOLIO BUTTON */
+.admin-portfolio-btn {
+  background: rgba(201, 168, 76, 0.1);
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  color: var(--gold);
+  padding: 0.45rem 0.95rem;
+  border-radius: 3px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+}
+
+.admin-portfolio-btn:hover {
+  background: var(--gold);
+  color: #0D0C0A;
+  border-color: var(--gold);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(201, 168, 76, 0.3);
+}
+
 /* ============================================================
    ADMIN DRAWER - CREDENTIALS & MASTER SECURITY
    ============================================================ */
