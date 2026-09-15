@@ -257,7 +257,7 @@ export default function ContactSection({ profile, onMessageSent }) {
 
         <button type="submit" className="form-submit" disabled={loading}>
           {loading ? (
-            <span>Saving to MongoDB...</span>
+            <span>Sending...</span>
           ) : (
             <>
               <span>Send Message</span>

@@ -1,7 +1,10 @@
 import React from 'react';
 
 export default function Navbar({ profile, servicesCount = 0, isAuthenticated = false, onOpenAdmin }) {
-  const name = profile?.name || 'Manish bhagat';
+  const rawName = profile?.name?.trim();
+  const name = (!rawName || rawName.toLowerCase() === 'manish')
+    ? 'MANISH BHAGAT'
+    : (rawName.toLowerCase().includes('bhagat') ? rawName.toUpperCase() : `${rawName.toUpperCase()} BHAGAT`);
 
   return (
     <nav>
