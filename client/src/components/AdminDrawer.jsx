@@ -11,7 +11,7 @@ export default function AdminDrawer({
   testimonials = [],
   onRefreshAll,
 }) {
-  const [activeTab, setActiveTab] = useState('inquiries'); // 'inquiries' | 'stats' | 'work' | 'services' | 'testimonials' | 'about' | 'socials' | 'compass' | 'credentials'
+  const [activeTab, setActiveTab] = useState('inquiries'); // 'inquiries' | 'stats' | 'work' | 'services' | 'testimonials' | 'about' | 'socials' | 'credentials'
 
   // ===================== INQUIRIES STATE =====================
   const [messages, setMessages] = useState([]);
@@ -978,8 +978,7 @@ export default function AdminDrawer({
               }}
               title="Return to public portfolio view"
             >
-              <span>🌐</span>
-              <span>View Portfolio</span>
+              View Portfolio
             </button>
             {onLogout && (
               <button
@@ -988,7 +987,7 @@ export default function AdminDrawer({
                 onClick={onLogout}
                 title="Log out and return to public portfolio view"
               >
-                <span>🚪 Logout</span>
+                Logout
               </button>
             )}
             <button className="admin-close-btn" onClick={onClose} title="Close Console (Esc)">
@@ -1048,12 +1047,7 @@ export default function AdminDrawer({
           >
             Socials & Contact ({contactChannels.length + socialLinks.length})
           </button>
-          <button
-            className={`admin-tab-btn ${activeTab === 'compass' ? 'active' : ''}`}
-            onClick={() => setActiveTab('compass')}
-          >
-            Compass
-          </button>
+
           <button
             className={`admin-tab-btn ${activeTab === 'credentials' ? 'active' : ''}`}
             onClick={() => setActiveTab('credentials')}
@@ -2333,31 +2327,6 @@ export default function AdminDrawer({
             </div>
           )}
 
-          {/* ===================== TAB 7: COMPASS ===================== */}
-          {activeTab === 'compass' && (
-            <div style={{ fontSize: '0.85rem', color: 'var(--text-light)', lineHeight: 1.8 }}>
-              <h4 style={{ fontSize: '0.95rem', color: 'var(--gold)', marginBottom: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                MongoDB Compass Collections
-              </h4>
-              <p style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>
-                Open <strong>MongoDB Compass</strong> and connect to <code>mongodb://127.0.0.1:27017</code>. Under the <strong>manish_portfolio_v2</strong> database, all collections update dynamically:
-              </p>
-              <ul style={{ paddingLeft: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-                <li>
-                  <strong style={{ color: 'var(--cream)' }}>profiles:</strong> Stores Stats metrics, About bio paragraphs, Skills array, and Social Links.
-                </li>
-                <li>
-                  <strong style={{ color: 'var(--cream)' }}>projects:</strong> Stores all portfolio work with categories, duration, year, and video embeds.
-                </li>
-                <li>
-                  <strong style={{ color: 'var(--cream)' }}>services:</strong> Stores video editing services and software tools.
-                </li>
-                <li>
-                  <strong style={{ color: 'var(--cream)' }}>messages:</strong> Real-time contact form inquiries submitted from the website.
-                </li>
-              </ul>
-            </div>
-          )}
 
           {/* ===================== TAB 8: CREDENTIALS ===================== */}
           {activeTab === 'credentials' && (

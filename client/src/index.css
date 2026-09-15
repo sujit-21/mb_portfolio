@@ -1374,19 +1374,6 @@ footer {
   }
 }
 
-.admin-compass-banner {
-  background: rgba(201, 168, 76, 0.08);
-  border: 1px dashed rgba(201, 168, 76, 0.3);
-  padding: 1rem 1.2rem;
-  margin-bottom: 1.5rem;
-  font-size: 0.8rem;
-  line-height: 1.6;
-  color: var(--text-light);
-}
-
-.admin-compass-banner strong {
-  color: var(--gold);
-}
 
 .message-card {
   background: var(--ink-3);
@@ -1918,9 +1905,9 @@ footer {
   background: rgba(226, 75, 74, 0.15);
   border: 1px solid rgba(226, 75, 74, 0.35);
   color: #FF8F8E;
-  padding: 0.45rem 0.95rem;
+  padding: 0.3rem 0.7rem;
   border-radius: 3px;
-  font-size: 0.78rem;
+  font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1944,9 +1931,9 @@ footer {
   background: rgba(201, 168, 76, 0.1);
   border: 1px solid rgba(201, 168, 76, 0.35);
   color: var(--gold);
-  padding: 0.45rem 0.95rem;
+  padding: 0.3rem 0.7rem;
   border-radius: 3px;
-  font-size: 0.78rem;
+  font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
