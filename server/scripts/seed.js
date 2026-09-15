@@ -43,8 +43,9 @@ async function seedDatabase() {
     }
 
     // Default profile
-    const initialProfile = backupData?.profiles?.[0] || {
-      name: 'Manish',
+    // Clean Profile without dummy Rickroll links
+    const initialProfile = {
+      name: 'Manish Bhagat',
       profilePicture: '',
       heroTagline: 'Video Editor',
       heroHeading: {
@@ -54,8 +55,8 @@ async function seedDatabase() {
       },
       heroSubtext:
         'I transform raw footage into compelling cinematic narratives. With over 2 years of experience in commercial, documentary, and creative video editing.',
-      showreelLabel: 'Play Showreel 2024',
-      showreelVideoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+      showreelLabel: 'Play Showreel',
+      showreelVideoUrl: '',
       experienceYears: '2+',
       projectsDelivered: '120+',
       viewsGenerated: '40M+',
@@ -98,10 +99,10 @@ async function seedDatabase() {
       },
     };
 
-    const initialProjects = backupData?.projects || [];
+    const initialProjects = [];
     const initialServices = backupData?.services || [];
-    const initialTestimonials = backupData?.testimonials || [];
-    const initialMessages = backupData?.messages || [];
+    const initialTestimonials = [];
+    const initialMessages = [];
 
     // Strip existing _ids so mongoose creates fresh consistent objects or updates cleanly
     const sanitizeDocs = (arr) => arr.map(({ _id, __v, createdAt, updatedAt, ...rest }) => rest);
