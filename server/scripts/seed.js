@@ -11,7 +11,6 @@ const Project = require('../models/Project');
 const Service = require('../models/Service');
 const Testimonial = require('../models/Testimonial');
 const Message = require('../models/Message');
-const AdminUser = require('../models/AdminUser');
 
 const MONGODB_URI =
   process.env.MONGODB_URI ||
@@ -76,9 +75,9 @@ async function seedDatabase() {
         'Remote Collaboration',
         'Multi-cam Editing',
       ],
-      email: process.env.ADMIN_EMAIL || 'editor.manish18@gmail.com',
+      email: 'editor.manish18@gmail.com',
       contactChannels: [
-        { icon: 'mail', label: process.env.ADMIN_EMAIL || 'editor.manish18@gmail.com', url: `mailto:${process.env.ADMIN_EMAIL || 'editor.manish18@gmail.com'}` },
+        { icon: 'mail', label: 'editor.manish18@gmail.com', url: 'mailto:editor.manish18@gmail.com' },
         { icon: 'instagram', label: '@manish.edit', url: 'https://instagram.com' },
         { icon: 'whatsapp', label: '+91 8102951819', url: 'https://api.whatsapp.com/send?phone=+918102951819' },
       ],
@@ -141,27 +140,18 @@ async function seedDatabase() {
       console.log(`✓ ${initialMessages.length} Messages seeded`);
     }
 
-    // Seed AdminUser
-    await AdminUser.deleteMany({});
-    await AdminUser.create({
-      username: process.env.ADMIN_USERNAME || 'manish',
-      email: process.env.ADMIN_EMAIL || 'editor.manish18@gmail.com',
-      password: process.env.ADMIN_PASSWORD || 'manish@secure2025',
-      lastPasswordChange: new Date(),
-    });
-    console.log('✓ Admin credentials seeded');
-
-    console.log('====================================================');
+    console.log('\n====================================================');
     console.log('🎉 MongoDB Atlas seeding complete!');
     console.log(`Database: "${mongoose.connection.name}"`);
     console.log('Collections ready:');
-    console.log('  - profiles: 1');
-    console.log(`  - projects: ${initialProjects.length}`);
-    console.log(`  - services: ${initialServices.length}`);
-    console.log(`  - testimonials: ${initialTestimonials.length}`);
-    console.log(`  - messages: ${initialMessages.length}`);
-    console.log('  - adminusers: 1');
-    console.log('====================================================');
+    console.log('  - profiles      : 1');
+    console.log(`  - projects      : ${initialProjects.length}`);
+    console.log(`  - services      : ${initialServices.length}`);
+    console.log(`  - testimonials  : ${initialTestimonials.length}`);
+    console.log(`  - messages      : ${initialMessages.length}`);
+    console.log('\n  ⚠  Admin credentials are NOT seeded here.');
+    console.log('     Run: node scripts/seed-admin.js  to create the admin account.');
+    console.log('====================================================\n');
 
     await mongoose.disconnect();
     process.exit(0);

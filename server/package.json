@@ -8,6 +8,7 @@
     "predev": "npx -y kill-port 5000",
     "dev": "nodemon server.js",
     "seed": "node scripts/seed.js",
+    "seed:admin": "node scripts/seed-admin.js",
     "kill:port": "npx -y kill-port 5000"
   },
   "dependencies": {

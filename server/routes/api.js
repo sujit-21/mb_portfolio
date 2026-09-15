@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
-const fs = require('fs');
-const path = require('path');
 
 const Profile = require('../models/Profile');
 const Project = require('../models/Project');
@@ -289,13 +287,12 @@ function verifyAuthToken(token) {
 }
 
 async function getAdminUser() {
-  let admin = await AdminUser.findOne();
+  const admin = await AdminUser.findOne();
   if (!admin) {
-    admin = await AdminUser.create({
-      username: process.env.ADMIN_USERNAME || 'manish',
-      email: process.env.ADMIN_EMAIL || 'manish.edit@portfolio.dev',
-      password: process.env.ADMIN_PASSWORD || 'manish@edit2024',
-    });
+    throw new Error(
+      'No admin account found in the database. ' +
+      'Please run: node scripts/seed-admin.js on the server to create one.'
+    );
   }
   return admin;
 }
@@ -405,20 +402,7 @@ router.put('/auth/credentials', async (req, res) => {
 
     await admin.save();
 
-    // Synchronize server/.env file backup
-    try {
-      const envPath = path.join(__dirname, '..', '.env');
-      if (fs.existsSync(envPath)) {
-        let envContent = fs.readFileSync(envPath, 'utf8');
-        envContent = envContent.replace(/^ADMIN_USERNAME=.*$/m, `ADMIN_USERNAME=${admin.username}`);
-        envContent = envContent.replace(/^ADMIN_EMAIL=.*$/m, `ADMIN_EMAIL=${admin.email}`);
-        envContent = envContent.replace(/^ADMIN_PASSWORD=.*$/m, `ADMIN_PASSWORD=${admin.password}`);
-        fs.writeFileSync(envPath, envContent, 'utf8');
-      }
-    } catch (e) {
-      console.warn('Could not sync .env file:', e.message);
-    }
-
+    // Credentials are stored ONLY in MongoDB — no file sync needed.
     const newToken = generateAuthToken(admin.username);
     res.json({
       success: true,
@@ -440,10 +424,9 @@ router.put('/auth/credentials', async (req, res) => {
 router.post('/auth/forgot-password', async (req, res) => {
   try {
     const admin = await getAdminUser();
-    const hint = process.env.ADMIN_RECOVERY_HINT || 'Master credentials can be viewed and updated in server/.env file.';
     res.json({
       success: true,
-      message: hint,
+      message: 'Please contact the site owner to reset your password.',
       adminEmail: admin.email,
     });
   } catch (err) {

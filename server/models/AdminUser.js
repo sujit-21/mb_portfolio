@@ -5,20 +5,20 @@ const AdminUserSchema = new mongoose.Schema(
     username: {
       type: String,
       required: true,
-      default: 'manish',
       trim: true,
+      // No default — credentials must be explicitly seeded into the database
     },
     email: {
       type: String,
       required: true,
-      default: 'manish.edit@portfolio.dev',
       trim: true,
       lowercase: true,
+      // No default — credentials must be explicitly seeded into the database
     },
     password: {
       type: String,
       required: true,
-      default: 'manish@edit2024',
+      // No default — credentials must be explicitly seeded into the database
     },
     lastPasswordChange: {
       type: Date,
