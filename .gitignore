@@ -17,6 +17,7 @@ build
 .env.*
 *.env
 server/data/legacy_v1_backup*
+server/data/backup_safety*
 
 # Operating System & Editor Files
 .DS_Store
